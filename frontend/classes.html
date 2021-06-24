@@ -14,25 +14,25 @@
             integrity="undefined" crossorigin="anonymous">
 
 
-            <link rel="stylesheet" type="text/css" href="./css/app.css">
-        <link rel="stylesheet" type="text/css" href="./css/profile.css">
+        <link rel="stylesheet" type="text/css" href="./css/app.css">
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
             integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     </head>
     <body>
+        <!-- Menú lateral -->
         <div class="side-menu">
             <h1 class="text-3xl">Bienvenido Juan</h1>
             <div class="mt-2">
                 <div class="section">
                     <span>Clases</span>
-                    <a href="" class="item item-active">
+                    <a href="javascript:void(0)" class="item item-active">
                         <div class="icon">
                             <i class="fa fa-book-open fa-lg" aria-hidden="true"></i>
                         </div>
                         <span>Lista de clases</span>
                     </a>
-                    <a href="" class="item">
+                    <a href="./createclass.php" class="item">
                         <div class="icon">
                             <i class="fa fa-edit fa-lg" aria-hidden="true"></i>
                         </div>
@@ -41,13 +41,13 @@
                 </div>
                 <div class="section">
                     <span>Actividades</span>
-                    <a href="" class="item">
+                    <a href="./ahorcado.php" class="item">
                         <div class="icon">
                             <i class="fab fa-odnoklassniki fa-lg" aria-hidden="true"></i>
                         </div>
                         <span>Ahorcado</span>
                     </a>
-                    <a href="" class="item">
+                    <a href="./dado.php" class="item">
                         <div class="icon">
                             <i class="fa fa-dice fa-lg" aria-hidden="true"></i>
                         </div>
@@ -56,19 +56,19 @@
                 </div>
                 <div class="section">
                     <span>Materias</span>
-                    <a href="" class="item">
+                    <a href="./espanol.html" class="item">
                         <div class="icon">
                             <i class="fa fa-pencil-alt fa-lg" aria-hidden="true"></i>
                         </div>
                         <span>Español</span>
                     </a>
-                    <a href="" class="item">
+                    <a href="./biologia.html" class="item">
                         <div class="icon">
                             <i class="fa fa-microscope fa-lg" aria-hidden="true"></i>
                         </div>
                         <span>Biología</span>
                     </a>
-                    <a href="" class="item">
+                    <a href="./matematicas.html" class="item">
                         <div class="icon">
                             <i class="fa fa-divide fa-lg" aria-hidden="true"></i>
                         </div>
@@ -86,11 +86,12 @@
                 </div>
             </div>
         </div>
-        <div class="ml-96 mt-3 container">
-            <!-- Inicio de la tabla con datos extraidos directamente de la base de datos -->
-            <div class="container text-center mt-5">
-                <h1 class="mt-3">Lista de Clases</h1>
-                <table class="mt-4 table">
+        <!-- Contenido -->
+        <div class="pl-96 pt-3">
+            <div class="container">
+                <!-- Inicio de la tabla con datos extraidos directamente de la base de datos -->
+                <h1 class="mt-3 text-4xl text-center">Lista de Clases</h1>
+                <table class="mt-4 table text-center">
                     <tr class="table-success mt-1">
                         <td colspan="5">Tabla de materias</td>
                     </tr>
@@ -101,58 +102,57 @@
                         <td>Materia</td>
                         <td>Recursos</td>
                     </tr>
-
                     <?php
-            include '../api/bd/conexion.php';
-            $connection = openConnection();
+                        include '../api/bd/conexion.php';
+                        $connection = openConnection();
 
-            $response = mysqli_query($connection,'select * from clases');
+                        $response = mysqli_query($connection,'select * from clases');
 
-            while($row = mysqli_fetch_array($response)){
+                        while($row = mysqli_fetch_array($response)){
 
 
-                ?>
-                    <tr>
-                        <td>
-                            <?php echo $row['id'];?>
-                        </td>
-                        <td>
-                            <?php echo $row['grupo'];?>
-                        </td>
-                        <?php
-                        $teacher = mysqli_query($connection,"select * from usuario where id='".$row['profesor_id']."' ");
-                        while($prof = mysqli_fetch_array($teacher)){
+                            ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $row['id'];?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['grupo'];?>
+                                    </td>
+                                    <?php
+                                    $teacher = mysqli_query($connection,"select * from usuario where id='".$row['profesor_id']."' ");
+                                    while($prof = mysqli_fetch_array($teacher)){
+                                ?>
+                                    <td>
+                                        <?php echo $prof['username'];?>
+                                    </td>
+                                    <?php
+                                }
+                                    $class = mysqli_query($connection,"select * from materia where id='".$row['materia_id']."' ");
+                                    while($materia = mysqli_fetch_array($class)){
+                                        switch ($materia['nombre']){
+                                            case "Español":
+                                                $ref = 'espanol.html';
+                                            break;
+                                            case "Matematicas":
+                                                $ref = 'matematicas.html';
+                                            break;
+                                            case "Biología":
+                                                $ref = 'biologia.html';
+                                            break;
+                                        }
+                                ?>
+                                    <td>
+                                        <?php echo $materia['nombre'];?>
+                                    </td>
+                                    <td><a href="<?php echo $ref; ?>">Visitar</a></td>
+                                    <?php
+                                }
+                                ?>
+                                </tr>
+                                <?php
+                        }
                     ?>
-                        <td>
-                            <?php echo $prof['username'];?>
-                        </td>
-                        <?php
-                    }
-                        $class = mysqli_query($connection,"select * from materia where id='".$row['materia_id']."' ");
-                        while($materia = mysqli_fetch_array($class)){
-                            switch ($materia['nombre']){
-                                case "Español":
-                                    $ref = 'espanol.html';
-                                break;
-                                case "Matematicas":
-                                    $ref = 'matematicas.html';
-                                break;
-                                case "Biología":
-                                    $ref = 'biologia.html';
-                                break;
-                            }
-                    ?>
-                        <td>
-                            <?php echo $materia['nombre'];?>
-                        </td>
-                        <td><a href="<?php echo $ref; ?>">Visitar</a></td>
-                        <?php
-                    }
-                    ?>
-                    </tr>
-                    <?php
-            }
-        ?>
                 </table>
                 <!-- /tabla -->
             </div>

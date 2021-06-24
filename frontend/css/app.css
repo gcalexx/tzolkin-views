@@ -34,6 +34,7 @@ body * {
 .side-menu .section .item{
     display: flex;
     align-items: center;
+    width: 180px;
     font-size: 18px;
     padding: 5px;
     margin: 5px 10px 5px 10px;
@@ -73,4 +74,9 @@ body * {
     width: 20px;
     margin-right: 20px;
     margin-left: 5px;
+}
+
+.container{
+    max-width: 1024px !important;
+    margin: auto !important;
 }
