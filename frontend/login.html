@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Flores López Luis Divier, Hernández Cárdenas Daniel, González Portilla Daniel Iram,Vera Avelino Oscar">
+    <meta name="keywords" content="HTML, CSS, Cajas, Maquetado, Listas">
+    <meta name="copyright" content="Tzolkin">
+    <meta name="description" content="login de usuarios">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">
+</head>
+<body>
+<!-- formulario de inicio de sesión con verificación de la base de datos -->
+<div class="container-fluid text-center mt-5 bg-ff7851">
+
+    <h1 class="text-center">Inicio de sesión</h1>
+    <br>
+    <br>
+    <form action="../api/controller/login.php" method="POST">
+        <div class="row g-3">
+            <div class="col-4 mb-3 mx-auto">
+                <label  class="form-label d-flex align-items-start">Usuario:</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-4 mb-3 mx-auto">
+                <label class="form-label d-flex align-items-start">Contraseña:</label>
+                <input type="password" class="form-control" id="password" name="password">
+            </div>
+        </div>
+        <br>
+        <button type="submit" id="button" class="mx-auto mb-5 btn btn-primary">Iniciar sesión</button>
+    </form>
+<!-- /formulario -->
+</div>
+</body>
+</html>
